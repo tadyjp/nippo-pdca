@@ -1,0 +1,41 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 10px 20px;
+  background: white;
+  background: url(/img/grey-pattern.png);
+  width: 780px;
+}
+
+.pink   {color:#FF3366;}
+.blue   {color:#0099CB;}
+.green  {color:#98CB00;}
+.orange {color:#FF6702;}
+.grey   {color:#AAAAAA;}
+
+.header{font-family: 'Audiowide', cursive;}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+#export{
+  text-align: center;
+}
+
+.clickable{
+  cursor: pointer;
+}
+.clickable:hover{
+  background-color: #ffe;
+}
+
+textarea{
+  width: 368px;
+  height: 100px;
+}
+
+.checkText{
+  padding-left: 1em;
+}

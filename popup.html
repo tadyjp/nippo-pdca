@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app ng-csp>
+  <head>
+    <title>日報ヘルパー</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/md5.js"></script>
+    <script src="js/dateformat.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <div ng-controller="MainCtrl">
+      <div class="row-fluid">
+        <div class="span6">
+          <h2 class="header pink"><span rel="tooltip" title="今日の予定" data-placement="bottom">Plan</span></h2>
+          <div>
+            <p>{{remaining()}} of {{todos.length}} remaining</p>
+            <ul class="unstyled">
+              <li ng-repeat="todo in todos | filter:{done:false}">
+                <i class="icon-ok clickable" ng-click="donePlan(todo)"></i>
+                {{todo.text}}
+                <i class="icon-trash clickable" ng-click="removePlan(todo)"></i>
+              </li>
+            </ul>
+            <form ng-submit="addTodo()">
+              <input id="first_focus" type="text" ng-model="todoText" size="30" placeholder="add new todo here">
+            </form>
+          </div>
+        </div>
+        <div class="span6">
+          <h2 class="header">
+            <span class="blue" rel="tooltip" title="行った業務" data-placement="bottom">Do</span>
+            <span class="grey">&amp;</span>
+            <span class="green" rel="tooltip" title="業務の反省" data-placement="bottom">Check</span>
+          </h2>
+          <div>
+            <ul class="unstyled">
+              <li ng-repeat="todo in todos | filter:{done:true}">
+                <i class="icon-minus-sign clickable" ng-click="revertDo(todo)"></i>
+                [{{todo.doneTime | date:'dd/MM@H:mm'}}] {{todo.text}}
+                <i class="icon-pencil clickable" ng-click="todo._editing = !todo._editing"></i>
+                <form ng-submit="todo._editing = false" ng-show="todo._editing">
+                  <input type="text" ng-model="todo.check" size="30" placeholder="memo...">
+                </form>
+                <p class="checkText clickable" ng-hide="todo._editing" ng-click="todo._editing = true;">{{todo.check}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!-- /.row-fluid -->
+
+      <div class="row-fluid">
+        <div class="span6">
+          <h2 class="header orange"><span rel="tooltip" title="明日のタスク">Action</span></h2>
+            <ul class="unstyled">
+              <li ng-repeat="action in actions">
+                <span class="clickable">{{action.text}}</span>
+                <i class="icon-trash clickable" ng-click="removeAction(action)"></i>
+              </li>
+            </ul>
+            <form ng-submit="addAction()">
+              <input type="text" ng-model="actionText" size="30" placeholder="add new todo here">
+            </form>
+        </div>
+        <div class="span6">
+          <h2 class="header grey"><span rel="tooltip" title="所感">Today</span></h2>
+          <textarea ng-model="todayText" placeholder="It was sunny today!"></textarea>          
+        </div>
+      </div><!-- /.row-fluid -->
+
+
+      <pre>{{todos|json}}</pre>
+      <pre>{{actions|json}}</pre>
+
+      <div id="export">
+        <button class="btn btn-info" ng-click="copyToGmail()">Copy to Gmail</button>
+        <button class="btn" ng-click="copyToClipboard()">Copy to Clipboard</button>
+      </div>
+    </div><!-- MainCtrl -->
+  </body>
+</html>

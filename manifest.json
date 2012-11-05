@@ -1,0 +1,28 @@
+{
+  "name": "日報ヘルパー",
+  "version": "0.1",
+  "manifest_version": 2,
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "description": "日報ヘルパー.",
+  "browser_action": {
+    "default_icon": "icon19.png",
+    "default_title": "日報ヘルパー",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://qiita.com/*"],
+      "js": ["js/jquery-1.8.2.min.js", "content_scripts.js"]
+    }
+  ],
+  "permissions": [
+    "http://riita.a-dat.net:3000/*",
+    "http://riita.a-dat.net/*",
+    "http://ec2-54-248-143-126.ap-northeast-1.compute.amazonaws.com:3000/*",
+    "http://ec2-54-248-143-126.ap-northeast-1.compute.amazonaws.com/*",
+    "http://127.0.0.1:3000/*"
+  ]
+}
